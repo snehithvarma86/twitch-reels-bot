@@ -58,7 +58,7 @@ const TwitchChat = ({ channel, isConnected, onReelDetected }) => {
       <Box sx={{ flex: 1, position: 'relative' }}>
         {isConnected ? (
           <iframe
-            title="Twitch Chat Embed"
+            title={`Twitch Chat for ${channel}`}
             src={`https://www.twitch.tv/embed/${channel}/chat?parent=${window.location.hostname}`}
             frameBorder="0"
             width="100%"
