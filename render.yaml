@@ -1,0 +1,22 @@
+services:
+  - type: web
+    name: twitch-reels-bot-frontend
+    env: node
+    buildCommand: npm install && npm run build
+    startCommand: serve -s build
+    envVars:
+      - key: REACT_APP_API_URL
+        value: https://twitch-reels-bot-backend.onrender.com
+    healthCheckPath: /
+    autoDeploy: true
+
+  - type: web
+    name: twitch-reels-bot-backend
+    env: node
+    buildCommand: npm install
+    startCommand: node server.js
+    envVars:
+      - key: PORT
+        value: 10000
+    healthCheckPath: /health
+    autoDeploy: true 
