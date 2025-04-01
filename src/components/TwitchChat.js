@@ -19,7 +19,7 @@ const TwitchChat = ({ channel, isConnected, onReelDetected }) => {
         client.on('message', (channel, tags, message, self) => {
           if (self) return;
 
-          const reelRegex = /https:\/\/(?:www\.)?instagram\.com\/(?:reel|p)\/[a-zA-Z0-9_-]+/;
+          const reelRegex = /https:\/\/(?:www\.)?instagram\.com\/(?:reels|p)\/[a-zA-Z0-9_-]+/;
           const match = message.match(reelRegex);
           
           if (match && onReelDetected) {
