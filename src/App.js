@@ -57,11 +57,12 @@ function App() {
 
   return (
     <Container 
-      maxWidth="xl" 
+      maxWidth={false} 
       sx={{ 
         py: 4,
         minHeight: '100vh',
-        backgroundColor: '#1a1a1f'
+        backgroundColor: '#1a1a1f',
+        maxWidth: 'none !important'
       }}
     >
       <Typography 
