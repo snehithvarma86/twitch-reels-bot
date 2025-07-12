@@ -21,15 +21,26 @@ const TwitchChat = ({ channel, isConnected, onReelDetected }) => {
         client.on('message', (channel, tags, message, self) => {
           if (self) return;
 
-          const reelRegex = /https:\/\/(?:www\.)?instagram\.com\/(?:reels|reel|p)\/[a-zA-Z0-9_-]+/;
+          const reelRegex = /https?:\/\/[^\s]+/;
           const match = message.match(reelRegex);
-          
+          console.log("match", match);
           if (match && onReelDetected) {
             const reelUrl = match[0];
+            console.log("reelUrl", reelUrl);
             
             // Check if this is the same URL as the last one
             if (reelUrl !== lastReelUrl) {
-              onReelDetected(reelUrl, tags['display-name']);
+              // Extract the description text (everything except the reel URL)
+              let description = message.replace(reelUrl, '').trim();
+              console.log("description", description);
+              
+              // Clean up the description by removing extra spaces and common separators
+              description = description.replace(/\s+/g, ' ').trim();
+              
+              // Remove common prefixes/suffixes that might be left
+              description = description.replace(/^[:\-\s\/]+/, '').replace(/[:\-\s\/]+$/, '');
+              
+              onReelDetected(reelUrl, tags['display-name'], description);
               setLastReelUrl(reelUrl);
             }
           }

@@ -20,13 +20,15 @@ function App() {
     setQueue([]);
   }, []);
 
-  const handleReelDetected = useCallback((url, username) => {
+  const handleReelDetected = useCallback((url, username, description = '') => {
     if (!url || !username) return;
     
     // Validate URL format
     try {
       const urlObj = new URL(url);
-      if (!urlObj.hostname.includes('instagram.com')) {
+      if (!urlObj.hostname.includes('instagram.com') && 
+          !urlObj.hostname.includes('youtube.com') && 
+          !urlObj.hostname.includes('youtu.be')) {
         return;
       }
     } catch (e) {
@@ -36,7 +38,14 @@ function App() {
     // Sanitize username
     const sanitizedUsername = username.replace(/[^a-zA-Z0-9_]/g, '');
     
-    setQueue(prevQueue => [...prevQueue, { url, username: sanitizedUsername }]);
+    // Sanitize description (remove any potentially harmful characters)
+    const sanitizedDescription = description.replace(/[<>]/g, '').trim();
+    
+    setQueue(prevQueue => [...prevQueue, { 
+      url, 
+      username: sanitizedUsername, 
+      description: sanitizedDescription 
+    }]);
   }, []);
 
   const handleConnect = useCallback(() => {
@@ -74,7 +83,7 @@ function App() {
           mb: 3
         }}
       >
-        Twitch Reels Bot
+        Twitch Media Queue
       </Typography>
       <Box sx={{ mb: 4 }}>
         <Grid container spacing={2} alignItems="center">
