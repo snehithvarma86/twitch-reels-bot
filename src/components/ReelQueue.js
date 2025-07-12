@@ -48,7 +48,7 @@ const ReelQueue = ({ queue, onPlay, onRemove, onClearAll }) => {
             fontSize: '1.4rem'
           }}
         >
-          Reel Queue
+          Media Queue
         </Typography>
         <Button
           variant="outlined"
@@ -89,18 +89,44 @@ const ReelQueue = ({ queue, onPlay, onRemove, onClearAll }) => {
               }}
             >
               <ListItemText 
-                primary={`Reel ${index + 1} from ${reel.username}`}
-                secondary={reel.url}
+                primary={`Link ${index + 1} from ${reel.username}`}
+                secondary={
+                  <Box>
+                    <Typography 
+                      component="div" 
+                      sx={{ 
+                        color: '#94a3b8',
+                        fontSize: '1.1rem',
+                        wordBreak: 'break-all',
+                        mb: reel.description ? 1 : 0
+                      }}
+                    >
+                      {reel.url}
+                    </Typography>
+                    {reel.description && (
+                      <Typography 
+                        component="div"
+                        sx={{ 
+                          color: '#ffffff',
+                          fontSize: '1.1rem',
+                          fontWeight: 'normal',
+                          wordBreak: 'break-word',
+                          backgroundColor: 'rgba(100, 116, 139, 0.1)',
+                          p: 1,
+                          borderRadius: 1,
+                          border: '1px solid rgba(100, 116, 139, 0.2)'
+                        }}
+                      >
+                        {reel.description}
+                      </Typography>
+                    )}
+                  </Box>
+                }
                 sx={{ 
                   '& .MuiListItemText-primary': {
                     fontWeight: 'bold',
                     color: '#8b5cf6',
                     fontSize: '1.15rem'
-                  },
-                  '& .MuiListItemText-secondary': {
-                    color: '#94a3b8',
-                    fontSize: '1.1rem',
-                    wordBreak: 'break-all'
                   }
                 }}
               />
